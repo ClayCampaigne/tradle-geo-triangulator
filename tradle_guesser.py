@@ -27,7 +27,14 @@ def load_country_data():
     # Get country centroids
     # Natural Earth data uses 'NAME' or 'ADMIN' for country names
     name_column = 'NAME' if 'NAME' in world.columns else ('ADMIN' if 'ADMIN' in world.columns else 'name')
-    centroids = world.centroid
+
+    # Project to equal-area CRS for accurate centroids, then convert back to geographic
+    # EPSG:6933 is Cylindrical Equal Area, good for global centroid calculations
+    world_projected = world.to_crs(epsg=6933)
+    centroids_projected = world_projected.centroid
+    # Convert centroids back to geographic coordinates (EPSG:4326)
+    centroids = centroids_projected.to_crs(epsg=4326)
+
     centroid_list = pd.concat([world[name_column], centroids], axis=1)
     centroid_list.columns = ['Country', 'Centroid']
 

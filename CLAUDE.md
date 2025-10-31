@@ -12,7 +12,6 @@ uv run --python 3.11 test_local.py
 uv run --python 3.11 python -c "from tradle_guesser import load_country_data; print(load_country_data()[0].head())"
 ```
 
-The CRS warning about centroids is expected and was present in the original implementation.
 
 ## Dependencies
 

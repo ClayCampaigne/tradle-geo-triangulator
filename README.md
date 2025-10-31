@@ -1,6 +1,6 @@
-# Tradle Hint Triangulator
+# Tradle Geographic Triangulator
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ClayCampaigne/tradle-guesser/HEAD?filepath=tradle_guesser.ipynb)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ClayCampaigne/tradle-geo-triangulator/HEAD?filepath=tradle_guesser.ipynb)
 
 A Jupyter notebook tool to help solve [Tradle](https://oec.world/en/tradle/) puzzles using distance and direction hints.
 
@@ -31,8 +31,8 @@ Click the badge above to launch the notebook in your browser. No installation re
 
 ```bash
 # Clone this repository
-git clone https://github.com/ClayCampaigne/tradle-guesser.git
-cd tradle-guesser
+git clone https://github.com/ClayCampaigne/tradle-geo-triangulator.git
+cd tradle-geo-triangulator
 
 # Install dependencies
 pip install -r requirements.txt
@@ -104,4 +104,5 @@ MIT
 ## Links
 
 - Play Tradle: https://oec.world/en/tradle/
+- GitHub Repository: https://github.com/ClayCampaigne/tradle-geo-triangulator
 - Original Gist: https://gist.github.com/ClayCampaigne/c93c859a36fb2732214a776f7c21959d

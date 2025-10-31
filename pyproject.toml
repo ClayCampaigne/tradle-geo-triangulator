@@ -1,7 +1,7 @@
 [project]
-name = "tradle-guesser"
+name = "tradle-geo-triangulator"
 version = "0.1.0"
-description = "Jupyter notebook tool for solving Tradle puzzles using distance and direction hints"
+description = "Geographic triangulation tool for solving Tradle puzzles using distance and direction hints"
 requires-python = ">=3.8,<3.14"
 dependencies = [
     "geopandas>=0.12.0",
