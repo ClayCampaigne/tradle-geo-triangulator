@@ -2,13 +2,16 @@
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ClayCampaigne/tradle-geo-triangulator/HEAD?filepath=tradle_guesser.ipynb) **← CLICK HERE TO LAUNCH THE APP!**
 
-A Jupyter notebook tool to help solve [Tradle](https://oec.world/en/tradle/) puzzles using distance and direction hints.
+A geographic triangulation tool to help solve [Tradle](https://oec.world/en/tradle/) puzzles. Tradle is a game where you identify countries based on their export data - this tool helps narrow down candidates using the distance and direction hints provided after each guess.
 
 ## What is Tradle?
 
-[Tradle](https://oec.world/en/tradle/) is a daily geography puzzle game similar to Wordle, but for countries. You guess a country, and the game tells you:
-- The distance (in kilometers) from your guess to the target country
-- The direction (cardinal directions: N, S, E, W, NE, NW, SE, SW) to the target country
+[Tradle](https://oec.world/en/tradle/) is a daily puzzle game where you identify a country based on the composition of its economic exports. Similar to Wordle, you have multiple guesses to figure out the answer. The game shows you:
+- A treemap visualization of the target country's export products
+- After each guess, the **distance** (in kilometers) from your guess to the target country
+- After each guess, the **direction** (cardinal directions: N, S, E, W, NE, NW, SE, SW) to the target country
+
+This tool helps with the **geographic triangulation** part - using the distance and direction hints to narrow down candidate countries.
 
 ## How This Tool Works
 
