@@ -4006,7 +4006,7 @@ wheels = [
 ]
 
 [[package]]
-name = "tradle-guesser"
+name = "tradle-geo-triangulator"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [

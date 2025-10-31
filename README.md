@@ -53,8 +53,9 @@ hints = [
     ("Eritrea", 4985)           # Without direction
 ]
 
-result = best_guesses(hints)
+result = best_guesses(hints, centroid_list, distance_df, penalty=10)
 result.head(10)  # Show top 10 candidates
+# Output shows total distance error in km (lower is better)
 ```
 
 ### Input Format
@@ -80,12 +81,19 @@ The notebook includes three complete examples showing:
 - How multiple hints narrow down the answer
 - The power of directional filtering
 
+### Output Format
+
+The output shows **total distance error in kilometers** for each candidate country (lower is better). Countries in the wrong direction have their error multiplied by the penalty.
+
 ## Parameters
 
 The `best_guesses()` function accepts optional parameters:
 
-- `tol` (float, default=0): Tolerance in degrees for direction filtering
-- `penalty` (float, default=2): Multiplier applied to countries in the wrong direction
+- **`penalty`** (float, default=2): Multiplier applied to countries in the wrong direction
+  - Use `penalty=10` for strong direction filtering (recommended)
+  - Use `penalty=2` for weaker filtering
+  - Use `penalty=100` or `float('inf')` to almost completely exclude wrong directions
+- **`tol`** (float, default=0): Tolerance in degrees for direction filtering (rarely needed)
 
 ## Data Source
 

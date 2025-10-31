@@ -9,6 +9,9 @@ import pandas as pd
 import numpy as np
 from scipy.spatial.distance import pdist, squareform
 
+# Valid cardinal directions
+VALID_DIRECTIONS = {'N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'}
+
 
 def load_country_data():
     """
@@ -98,14 +101,22 @@ def calculate_mismatch(guessed_country, given_distance, centroid_list, distance_
         centroid_list (DataFrame): DataFrame with Country and Centroid columns
         distance_df (DataFrame): Distance matrix between countries
         direction (str, optional): The cardinal direction in which the correct country lies
+                                   Must be one of: N, NE, E, SE, S, SW, W, NW
         tol (float): Tolerance for direction filtering (degrees)
         penalty (float): Multiplier for mismatches in wrong direction
 
     Returns:
         Series: A Series containing the mismatch in distance for each country
+
+    Raises:
+        ValueError: If direction is invalid or country not found
     """
     if guessed_country not in distance_df.index:
-        return f"Guessed country '{guessed_country}' not found in the distance matrix."
+        raise ValueError(f"Guessed country '{guessed_country}' not found in the distance matrix. "
+                        f"Available countries: {sorted(distance_df.index.tolist())}")
+
+    if direction is not None and direction not in VALID_DIRECTIONS:
+        raise ValueError(f"Invalid direction '{direction}'. Must be one of: {sorted(VALID_DIRECTIONS)}")
 
     # Calculate the absolute mismatch for each country
     mismatch = distance_df.loc[guessed_country].apply(lambda x: abs(x - given_distance))
@@ -120,14 +131,24 @@ def calculate_mismatch(guessed_country, given_distance, centroid_list, distance_
             current_coord = centroid_list.set_index('Country').loc[country, 'Centroid']
             lat_current, long_current = current_coord.y, current_coord.x
 
-            # Apply direction filters
+            # Apply direction filters for latitude (straightforward)
             if 'N' in direction and lat_current <= lat_guessed + tol:
                 mismatch.loc[country] *= penalty
             if 'S' in direction and lat_current >= lat_guessed - tol:
                 mismatch.loc[country] *= penalty
-            if 'E' in direction and long_current <= long_guessed + tol:
+
+            # Apply direction filters for longitude (handle date line wrapping)
+            # Calculate the shortest angular difference considering wrapping
+            lon_diff = long_current - long_guessed
+            # Normalize to [-180, 180]
+            if lon_diff > 180:
+                lon_diff -= 360
+            elif lon_diff < -180:
+                lon_diff += 360
+
+            if 'E' in direction and lon_diff <= tol:
                 mismatch.loc[country] *= penalty
-            if 'W' in direction and long_current >= long_guessed - tol:
+            if 'W' in direction and lon_diff >= -tol:
                 mismatch.loc[country] *= penalty
 
     return mismatch.sort_values()
@@ -148,7 +169,8 @@ def best_guesses(input_list, centroid_list, distance_df, tol=0, penalty=2):
         penalty (float): Multiplier for countries in wrong direction
 
     Returns:
-        Series: Countries ranked by total mismatch (lower is better)
+        DataFrame: Countries ranked by total mismatch (lower is better)
+                   with column 'adjusted_km_total_error'
 
     Example:
         best_guesses([("Thailand", 7705, 'NW'), ("Eritrea", 4985)],
@@ -175,4 +197,6 @@ def best_guesses(input_list, centroid_list, distance_df, tol=0, penalty=2):
         else:
             total_dist_errors += mismatch
 
-    return total_dist_errors.sort_values().dropna()
+    # Convert to DataFrame with named column
+    result = total_dist_errors.sort_values().dropna().to_frame(name='adjusted_km_total_error')
+    return result
