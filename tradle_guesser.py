@@ -19,12 +19,16 @@ def load_country_data():
             - centroid_list: DataFrame with Country and Centroid columns
             - distance_df: Square distance matrix between all countries
     """
-    # Load Natural Earth data via GeoPandas
-    world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
+    # Load Natural Earth data directly from their server
+    # This avoids the deprecated geopandas.datasets module
+    url = "https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip"
+    world = gpd.read_file(url)
 
     # Get country centroids
+    # Natural Earth data uses 'NAME' or 'ADMIN' for country names
+    name_column = 'NAME' if 'NAME' in world.columns else ('ADMIN' if 'ADMIN' in world.columns else 'name')
     centroids = world.centroid
-    centroid_list = pd.concat([world['name'], centroids], axis=1)
+    centroid_list = pd.concat([world[name_column], centroids], axis=1)
     centroid_list.columns = ['Country', 'Centroid']
 
     # Extract latitude and longitude from the Centroid geometry
