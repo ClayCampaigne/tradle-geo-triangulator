@@ -1,0 +1,107 @@
+# Tradle Hint Triangulator
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ClayCampaigne/tradle-guesser/HEAD?filepath=tradle_guesser.ipynb)
+
+A Jupyter notebook tool to help solve [Tradle](https://oec.world/en/tradle/) puzzles using distance and direction hints.
+
+## What is Tradle?
+
+[Tradle](https://oec.world/en/tradle/) is a daily geography puzzle game similar to Wordle, but for countries. You guess a country, and the game tells you:
+- The distance (in kilometers) from your guess to the target country
+- The direction (cardinal directions: N, S, E, W, NE, NW, SE, SW) to the target country
+
+## How This Tool Works
+
+This notebook triangulates the target country by:
+
+1. **Distance Calculation**: Uses the Haversine formula to compute great circle distances between all country centroids
+2. **Mismatch Analysis**: For each guess, calculates how well every possible country matches the given distance
+3. **Direction Filtering**: Applies directional constraints to eliminate countries in the wrong direction
+4. **Ranking**: Sums up mismatches across all hints to rank candidate countries (lower score = better match)
+
+The country with the lowest total mismatch is most likely the answer.
+
+## Quick Start
+
+### Option 1: Run in Binder (No Installation)
+
+Click the badge above to launch the notebook in your browser. No installation required!
+
+### Option 2: Run Locally
+
+```bash
+# Clone this repository
+git clone https://github.com/ClayCampaigne/tradle-guesser.git
+cd tradle-guesser
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Open the notebook
+jupyter notebook tradle_guesser.ipynb
+```
+
+## Usage
+
+The main function is `best_guesses()`, which takes a list of hints:
+
+```python
+# Each hint is a tuple: (country_name, distance, direction)
+# Direction is optional
+hints = [
+    ("Thailand", 7705, 'NW'),  # With direction
+    ("Eritrea", 4985)           # Without direction
+]
+
+result = best_guesses(hints)
+result.head(10)  # Show top 10 candidates
+```
+
+### Input Format
+
+Each hint tuple contains:
+1. **Country name** (str): The country you guessed in Tradle
+2. **Distance** (float): The distance shown by Tradle in kilometers
+3. **Direction** (str, optional): Cardinal direction shown by Tradle (e.g., 'N', 'SE', 'NW')
+
+### Example Workflow
+
+1. Play Tradle and make your first guess
+2. Record the distance and direction shown
+3. Add this hint to the notebook
+4. Run `best_guesses()` to see top candidates
+5. Make your next guess based on the results
+6. Add the new hint and repeat until you solve it!
+
+## Examples
+
+The notebook includes three complete examples showing:
+- Basic usage with distance and direction
+- How multiple hints narrow down the answer
+- The power of directional filtering
+
+## Parameters
+
+The `best_guesses()` function accepts optional parameters:
+
+- `tol` (float, default=0): Tolerance in degrees for direction filtering
+- `penalty` (float, default=2): Multiplier applied to countries in the wrong direction
+
+## Data Source
+
+Country centroids are from Natural Earth data via GeoPandas, which includes approximately 177 countries.
+
+## Limitations
+
+- Uses country centroids rather than population centers
+- Some small island nations may have less accurate positions
+- Direction filtering uses simple lat/long comparisons (not great circle bearings)
+
+## License
+
+MIT
+
+## Links
+
+- Play Tradle: https://oec.world/en/tradle/
+- Original Gist: https://gist.github.com/ClayCampaigne/c93c859a36fb2732214a776f7c21959d
