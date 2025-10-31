@@ -1,6 +1,6 @@
 # Tradle Geographic Triangulator
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ClayCampaigne/tradle-geo-triangulator/HEAD?filepath=tradle_guesser.ipynb)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ClayCampaigne/tradle-geo-triangulator/HEAD?filepath=tradle_guesser.ipynb) **← CLICK HERE TO LAUNCH THE APP!**
 
 A Jupyter notebook tool to help solve [Tradle](https://oec.world/en/tradle/) puzzles using distance and direction hints.
 
@@ -90,10 +90,18 @@ The output shows **total distance error in kilometers** for each candidate count
 The `best_guesses()` function accepts optional parameters:
 
 - **`penalty`** (float, default=2): Multiplier applied to countries in the wrong direction
-  - Use `penalty=10` for strong direction filtering (recommended)
-  - Use `penalty=2` for weaker filtering
-  - Use `penalty=100` or `float('inf')` to almost completely exclude wrong directions
-- **`tol`** (float, default=0): Tolerance in degrees for direction filtering (rarely needed)
+  - Controls the strength of direction filtering
+  - `penalty=10`: Strong filtering - wrong direction gets 10× the error (recommended)
+  - `penalty=2`: Weak filtering - wrong direction gets 2× the error
+  - `penalty=100` or `float('inf')`: Nearly complete exclusion of wrong directions
+
+- **`tol`** (float, default=0): Tolerance in degrees for direction filtering
+  - Defines a buffer zone around exact directions
+  - `tol=0`: Strict - "West" means any longitude less than the guess (default)
+  - `tol=5`: Lenient - "West" means 5° or more west of the guess
+  - Rarely needed; most users should leave at 0
+
+**How they work together:** `tol` defines the buffer zone, `penalty` determines what happens to countries outside that zone. For most use cases, just use `penalty=10` and `tol=0`.
 
 ## Data Source
 
