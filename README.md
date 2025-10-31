@@ -1,6 +1,6 @@
 # Tradle Geographic Triangulator
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ClayCampaigne/tradle-geo-triangulator/voila-ui?urlpath=voila%2Frender%2Ftradle_app.ipynb) **← CLICK HERE TO LAUNCH THE APP!**
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ClayCampaigne/tradle-geo-triangulator/HEAD?urlpath=voila%2Frender%2Ftradle_app.ipynb) **← CLICK HERE TO LAUNCH THE APP!**
 
 An interactive web app to help solve [Tradle](https://oec.world/en/tradle/) puzzles. Tradle is a game where you identify countries based on their export data - this tool helps narrow down candidates using the distance and direction hints provided after each guess.
 
