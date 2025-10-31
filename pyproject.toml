@@ -1,0 +1,17 @@
+[project]
+name = "tradle-guesser"
+version = "0.1.0"
+description = "Jupyter notebook tool for solving Tradle puzzles using distance and direction hints"
+requires-python = ">=3.8,<3.14"
+dependencies = [
+    "geopandas>=0.12.0",
+    "pandas>=1.5.0",
+    "numpy>=1.23.0",
+    "scipy>=1.9.0",
+]
+
+[project.optional-dependencies]
+notebook = [
+    "jupyter>=1.0.0",
+    "notebook>=6.0.0",
+]
