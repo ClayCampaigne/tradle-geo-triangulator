@@ -1,8 +1,8 @@
 # Tradle Geographic Triangulator
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ClayCampaigne/tradle-geo-triangulator/HEAD?filepath=tradle_guesser.ipynb) **← CLICK HERE TO LAUNCH THE APP!**
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ClayCampaigne/tradle-geo-triangulator/voila-ui?urlpath=voila%2Frender%2Ftradle_app.ipynb) **← CLICK HERE TO LAUNCH THE APP!**
 
-A Jupyter notebook tool to help solve [Tradle](https://oec.world/en/tradle/) puzzles using distance and direction hints.
+An interactive web app to help solve [Tradle](https://oec.world/en/tradle/) puzzles using distance and direction hints.
 
 ## What is Tradle?
 
@@ -23,11 +23,18 @@ The country with the lowest total mismatch is most likely the answer.
 
 ## Quick Start
 
-### Option 1: Run in Binder (No Installation)
+### Option 1: Interactive Web App (No Installation)
 
-Click the badge above to launch the notebook in your browser. No installation required!
+Click the badge above to launch the interactive app in your browser. No installation required!
+
+The app provides a user-friendly interface where you can:
+- Add/remove hints with dropdown menus
+- Adjust the direction penalty
+- See results instantly
 
 ### Option 2: Run Locally
+
+#### Interactive App (Voila)
 
 ```bash
 # Clone this repository
@@ -37,7 +44,14 @@ cd tradle-geo-triangulator
 # Install dependencies
 pip install -r requirements.txt
 
-# Open the notebook
+# Run the interactive app
+voila tradle_app.ipynb
+```
+
+#### Jupyter Notebook (Code Access)
+
+```bash
+# Same setup as above, then:
 jupyter notebook tradle_guesser.ipynb
 ```
 
